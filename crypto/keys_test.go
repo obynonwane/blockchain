@@ -16,7 +16,10 @@ func TestGeneratePrivateKey(t *testing.T) {
 
 func TestPrivateKeySign(t *testing.T) {
 	//generate private key
-	privKey := GeneratePrivateKey()
-	//generate message byte
-	msg := []byte("foo bar baz")
+	privKey := GeneratePrivateKey() //generate private key
+	pubKey := privKey.Public()      //generate public key
+	msg := []byte("foo bar baz")    //create a message
+
+	sig := privKey.Sign(msg)                //sign the message
+	assert.True(t, sig.Verify(pubKey, msg)) //verify the message signed
 }
